@@ -1,1 +1,29 @@
 @import "bootstrap";
+
+#main_container
+{
+	padding-top: 50px;
+}
+
+#logout_button
+{
+	height: 50px;
+}
+
+#logout_button a
+{
+	line-height: 40px;
+}
+
+#login_form_wrapper
+{
+	width: 350px;
+	margin: 0 auto;
+	position: relative;
+}
+
+#login_form_wrapper h1
+{
+	text-align: center;
+	padding-bottom: 25px;
+}

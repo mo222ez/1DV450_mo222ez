@@ -1,0 +1,17 @@
+<div id="login_form_wrapper">
+	<% flash.each do |name, msg| %>
+		<%= content_tag :div, msg, :id => "flash_#{name}", :class => "alert alert-#{name}" %>
+    <% end %>
+	<h1>Login</h1>
+	<%= form_tag sessions_path do %>
+		<div class="field">
+			<%= text_field_tag :email, params[:email], :class => "input-block-level", :placeholder => "Email" %>
+		</div>
+		<div class="field">
+			<%= text_field_tag :password, params[:password], :class => "input-block-level", :placeholder => "Password", :type => "password" %>
+		</div>
+		<div class="actions">
+			<%= submit_tag "Log in", :class => "btn btn-large btn-block btn-primary" %>
+		</div>
+	<% end %>
+</div>
