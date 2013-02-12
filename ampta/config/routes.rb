@@ -1,6 +1,9 @@
 Ampta::Application.routes.draw do
   # get "login" => "sessions#new", :as => "login"
   get "logout" => "sessions#destroy", :as => "logout"
+  get "start" => "home#index", :as => "start"
+  get "all" => "projects#index", :as => "all"
+  get "new" => "projects#new", :as => "new"
   get "home/index"
 
   resources :sessions

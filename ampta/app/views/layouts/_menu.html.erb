@@ -9,13 +9,22 @@
 			<a class="brand" href="#">AMPTA</a>
 			<div class="nav-collapse collapse">
 				<ul class="nav">
-					<li class="active"><a href="#">Start</a></li>
-					<li><a href="#about">Alla projekt</a></li>
-					<li><a href="#contact">Skapa projekt</a></li>
+					<li class="<%= 'active' if params[:controller] == 'home' %>">
+						<%= link_to "Start", start_path %>
+					</li>
+
+					<li class="<%= 'active' if params[:controller] == 'projects' %>">
+						<%= link_to "Alla projekt", all_path %>
+					</li>
+
+					<li class="<%= 'active' if params[:controller] == 'projects' && params[:action] == 'new' %>">
+						<%= link_to "Skapa projekt", new_path %>
+					</li>
 				</ul>
-				<div class="pull-right" id="logout_button">
+				<p class="navbar-text pull-right">
+					Inloggad som <%= @user.first_name %> - 
 					<%= link_to "Logga ut", logout_path, :action => "destroy" %>
-				</div>
+				</p>
 			</div>
 		</div>
 	</div>
