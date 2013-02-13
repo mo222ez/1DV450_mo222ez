@@ -1,0 +1,20 @@
+<div class="span3">
+	<div class="well sidebar-nav">
+		<ul class="nav nav-list">
+			<li class="nav-header">Dina projekt</li>
+			<% @user.projects.each do |project| %>
+				<li>
+					<%= link_to project.name, project %>
+					<% if project.owner_id == @user.id %>
+						(Admin)
+					<% end %>
+				</li>
+			<% end %>
+			</table>
+			<li class="nav-header">Dina senaste 10 tickets</li>
+			<li>4</li>
+			<li>5</li>
+			<li>6</li>
+		</ul>
+	</div>
+</div>

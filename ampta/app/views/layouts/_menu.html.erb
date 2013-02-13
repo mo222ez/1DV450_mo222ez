@@ -6,19 +6,19 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="brand" href="#">AMPTA</a>
+			<%= link_to "AMPTA", start_path, :class => "brand" %>
 			<div class="nav-collapse collapse">
 				<ul class="nav">
 					<li class="<%= 'active' if params[:controller] == 'home' %>">
 						<%= link_to "Start", start_path %>
 					</li>
 
-					<li class="<%= 'active' if params[:controller] == 'projects' %>">
-						<%= link_to "Alla projekt", all_path %>
+					<li class="<%= 'active' if params[:controller] == 'projects' && params[:action] == "index" || params[:controller] == 'projects' && params[:action] == "show" %>">
+						<%= link_to "Alla projekt", projects_path %>
 					</li>
 
 					<li class="<%= 'active' if params[:controller] == 'projects' && params[:action] == 'new' %>">
-						<%= link_to "Skapa projekt", new_path %>
+						<%= link_to "Skapa projekt", projects_new_path %>
 					</li>
 				</ul>
 				<p class="navbar-text pull-right">

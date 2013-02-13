@@ -1,0 +1,58 @@
+<%= form_for(@project, :html => { :class => "form-horizontal project_form"} ) do |f| %>
+  <!--<%= @project.errors.any? %>-->
+  <% if @project.errors.any? %>
+    hej
+    <div id="error_explanation">
+      <h2><%= pluralize(@project.errors.count, "fel") %> i formuläret gjorde att projektet inte kunde sparas:</h2>
+
+      <ul>
+        <% @project.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :name, :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :name, :class => "input-xlarge" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :description, :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_area :description, :class => "input-xlarge", :rows => "5" %>
+    </div>
+  </div>
+  <div class="control-group date_group">
+    <%= f.label :start_date, :class => "control-label" %>
+    <div class="controls">
+      <%= f.date_select :start_date %>
+    </div>
+  </div>
+
+  <div class="control-group date_group">
+    <%= f.label :end_date, :class => "control-label" %>
+    <div class="controls">
+      <%= f.date_select :end_date, :html_options => { :class => "input-mini"} %>
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <% @users.each do |u| %>
+        <% if u.id != @user.id %>
+          <label class="checkbox">
+            <%= check_box_tag "project_users[]", u.id, u.projects.include?(@project) %>
+            <%= u.first_name %>
+          </label>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="actions control-group">
+    <div class="controls">
+      <%= f.submit :class => "btn btn-large btn-primary" %>
+    </div>
+  </div>
+<% end %>

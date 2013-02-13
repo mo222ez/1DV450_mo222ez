@@ -1,0 +1,24 @@
+<div class="row-fluid">
+	<%= render "layouts/projects_navbar" %>
+	<div class="span9">
+		<div class="hero-unit">
+			<h1>Alla projekt i systemet</h1>
+			<% @projects.each do |project| %>
+				<div>
+					<% if project.users.include?(@user) %>
+						<span class="label label-success">
+							Medlem
+						</span>
+					<% else %>
+						<span class="label label-important">
+							Ej medlem
+						</span>
+					<% end %>
+					<span>
+						<%= link_to project.name, project %>
+					</span>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>
