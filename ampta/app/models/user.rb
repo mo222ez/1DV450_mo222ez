@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 	validates_presence_of :password, :on => :create
 	validates_presence_of :password_confirmation, :on => :create
 
-	def self.authenticate(email, password)
+	def self.authenticate(password)
 		find_by_email(email).try(:authenticate, password)
 	end
 end

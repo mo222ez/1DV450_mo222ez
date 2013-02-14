@@ -19,7 +19,6 @@ class ProjectsController < ApplicationController
 		@users = User.all
 	end
 
-	# POST /projects
 	def create
 		@project = Project.new(params[:project])
 		@project.owner_id = @user.id
@@ -32,10 +31,7 @@ class ProjectsController < ApplicationController
 				session[:failed_project] = nil
 				format.html { redirect_to @project, notice: "Projektet skapades" }
 			end
-			# redirect_to @project, :notice "Projektet skapades"
-			# redirect_to action :show, :notice "Projektet skapades"
 		else
-			# render :action => "new"
 			session[:failed_project] = @project
 			session[:failed_validation] = "failed_validation"
 			redirect_to projects_new_path
@@ -57,7 +53,6 @@ class ProjectsController < ApplicationController
 
 	def update
 		@project = Project.find(params[:id])
-		# puts @project
 		@project.users.delete(@project.users)
 		@project.owner_id = @user.id
 
@@ -69,8 +64,6 @@ class ProjectsController < ApplicationController
 			session[:failed_project] = nil
 			redirect_to @project, notice: "Projektet uppdaterades"
 		else
-			#session[:failed_project_update] = @project
-			#session[:failed_validation_update] = "failed_validation_update"
 			session[:failed_validation_update_errors] = @project.errors.full_messages
 			@project.users << @user
 			redirect_to edit_project_path

@@ -20,7 +20,6 @@ class TicketController < ApplicationController
     @project = @ticket.project
 
   	if @ticket.update_attributes(params[:ticket])
-  		# redirect_to session[:session_project_id] + ticket_path(@ticket)
   		redirect_to project_path(session[:session_project_id]) + ticket_path(@ticket)
   	else
   		session[:failed_ticket_validation_update_errors] = @ticket.errors.full_messages

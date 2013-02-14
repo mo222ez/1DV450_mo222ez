@@ -29,7 +29,20 @@
 				<strong>Tickets: </strong> <br/>
 				<% @project.tickets.each do |t| %>
 					<div class="ticket">
-						<%= link_to t.name, @project.id.to_s + ticket_path(t) %>, status: <%= t.status.status_name%>
+						<%= link_to t.name, @project.id.to_s + ticket_path(t) %>
+						<% if t.status_id == 1 %>
+							<span class="label label-important">
+								<%= t.status.status_name%>
+							</span>
+						<% elsif t.status_id == 2 %>
+							<span class="label label-warning">
+								<%= t.status.status_name%>
+							</span>
+						<% end %>
+
+						<% if t.user_id == @user.id %>
+							<span class="label label-success">Ägare</span>
+						<% end %>
 					</div>
 					
 				<% end %>

@@ -2,33 +2,27 @@ Ampta::Application.routes.draw do
 
   get "tickets/index"
 
-  get "projects/:id/tickets/:id/edit" => "ticket#edit"
-
-  # get "tickets/new" => "ticket#new", :as => "tickets/new"
-  get "projects/:id/tickets/new" => "ticket#new"
+  
+  
   post "tickets" => "ticket#create", :as => "tickets"
   delete "tickets/:id" => "ticket#destroy"
   put "tickets/:id" => "ticket#update"
 
+  get "projects/:id/tickets/:id/edit" => "ticket#edit"
+  get "projects/:id/tickets/new" => "ticket#new"
   get "projects/:id/tickets/:id" => "ticket#show", :as => "ticket/show"
 
   # get "login" => "sessions#new", :as => "login"
   get "logout" => "sessions#destroy", :as => "logout"
   get "start" => "home#index", :as => "start"
 
-  get "projects" => "projects#index", :as => "projects"
-  # get "projects/index" => "projects#index", :as => "projects"
-
   get "projects/new" => "projects#new", :as => "projects/new"
-
-  get "projects/show"
   
 
-  get "home/index"
 
   resources :sessions
   resources :projects
-  resources :tickets
+  # resources :tickets
   resources :users
 
   root :to => 'sessions#new'
