@@ -1,0 +1,30 @@
+<div class="row-fluid">
+	<%= render "layouts/projects_navbar" %>
+	<div class="span9">
+		<div class="hero-unit">
+			<h2><%= @ticket.name %></h2>
+			<p>
+				<strong>Beskrivning: </strong>
+				<br/>
+				<%= @ticket.description %>
+			</p>
+			<p>
+				<strong>Ägare: </strong>
+				<br/>
+				<%= @ticket.user.first_name %> <%= @ticket.user.last_name %>
+			</p>
+			<p>
+				<strong>Status: </strong>
+				<br/>
+				<%= @ticket.status.status_name %>
+			</p>
+			<p>
+				
+			</p>
+			<% if @user.id == @ticket.user_id %>
+				<%= link_to 'Redigera ticket', project_path(session[:session_project_id]) + edit_ticket_path(), :class => "btn btn-primary" %>
+				<%= link_to 'Ta bort ticket', ticket_path(@ticket), method: :delete, data: { confirm: 'Är du säker på att du vill ta bort denna ticket?' }, :class => "btn btn-danger" %>
+			<% end %>
+		</div>
+	</div>
+</div>

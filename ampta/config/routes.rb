@@ -1,5 +1,16 @@
 Ampta::Application.routes.draw do
 
+  get "tickets/index"
+
+  get "projects/:id/tickets/:id/edit" => "ticket#edit"
+
+  get "tickets/new" => "ticket#new", :as => "tickets/new"
+  post "tickets" => "ticket#create", :as => "tickets"
+  delete "tickets/:id" => "ticket#destroy"
+  put "tickets/:id" => "ticket#update"
+
+  get "projects/:id/tickets/:id" => "ticket#show", :as => "ticket/show"
+
   # get "login" => "sessions#new", :as => "login"
   get "logout" => "sessions#destroy", :as => "logout"
   get "start" => "home#index", :as => "start"
@@ -16,8 +27,15 @@ Ampta::Application.routes.draw do
 
   resources :sessions
   resources :projects
+  resources :tickets
+  resources :users
 
   root :to => 'sessions#new'
+
+  resources :projects do
+    resources :tickets
+      post 'create'
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

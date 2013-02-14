@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
 	attr_accessible :email, :first_name, :last_name, :password, :password_confirmation
 	
+	has_many :tickets
 	has_and_belongs_to_many :projects
 
 	has_secure_password

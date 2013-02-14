@@ -1,18 +1,13 @@
+<% if @project.errors.any? %>
+  <div id="error_explanation" class="alert alert-error">
+    <h4><%= @project.errors.count %> fel gjorde att projektet inte kunde sparas</h4>
+    <% @project.errors.full_messages.each do |msg| %>
+        <span><%= msg %></span><br/>
+    <% end %>
+  </div>
+<% end %>
 <%= form_for(@project, :html => { :class => "form-horizontal project_form"} ) do |f| %>
   <!--<%= @project.errors.any? %>-->
-  <% if @project.errors.any? %>
-    hej
-    <div id="error_explanation">
-      <h2><%= pluralize(@project.errors.count, "fel") %> i formuläret gjorde att projektet inte kunde sparas:</h2>
-
-      <ul>
-        <% @project.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="control-group">
     <%= f.label :name, :class => "control-label" %>
     <div class="controls">

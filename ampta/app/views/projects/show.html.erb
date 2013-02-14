@@ -3,9 +3,32 @@
 	<div class="span9">
 		<div class="hero-unit">
 			<h2><%= @project.name %></h2>
+			<p>
+				<strong>Startdatum: </strong><%= @project.start_date%>
+			</p>
+			<p>
+				<strong>Slutdatum: </strong><%= @project.end_date%>
+			</p>
+			<p>
+				<strong>Användare: </strong> <br/>
+				<% @project.users.each do |u| %>
+					<%= u.first_name %> <br/>
+				<% end %>
+			</p>
+			<p>
+				<strong>Tickets: </strong> <br/>
+				<% @project.tickets.each do |t| %>
+					<div class="ticket">
+						<%= link_to t.name, @project.id.to_s + ticket_path(t) %>
+					</div>
+					
+				<% end %>
+				<br/>
+				<%= link_to "Lägg till ny ticket", new_ticket_path, :class => "btn btn-primary" %>
+			</p>
 			<% if @user.id == @project.owner_id %>
 				<%= link_to 'Redigera', edit_project_path, :class => "btn btn-primary" %>
-				<%= link_to 'Ta bort projektet', @project, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %>
+				<%= link_to 'Ta bort projektet', @project, method: :delete, data: { confirm: 'Är du säker på att du vill ta bort detta projekt?' }, :class => "btn btn-danger" %>
 			<% end %>
 		</div>
 	</div>
