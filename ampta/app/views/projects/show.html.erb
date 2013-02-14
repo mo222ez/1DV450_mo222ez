@@ -1,7 +1,17 @@
 <div class="row-fluid">
 	<%= render "layouts/projects_navbar" %>
 	<div class="span9">
+		<div class="alert alert-info">
+			<% if @project.users.include?(@user) && @project.owner_id == @user.id %>
+				<strong>Du har fulla rättigheter till detta projekt</strong>
+			<% elsif @project.users.include?(@user) %>
+				<strong>Du kan lägga till tickets i detta projekt</strong>
+			<% else %>
+				<strong>Du har inga rättigheter i detta projekt</strong>
+			<% end %>
+		</div>
 		<div class="hero-unit">
+			
 			<h2><%= @project.name %></h2>
 			<p>
 				<strong>Startdatum: </strong><%= @project.start_date%>
@@ -19,12 +29,14 @@
 				<strong>Tickets: </strong> <br/>
 				<% @project.tickets.each do |t| %>
 					<div class="ticket">
-						<%= link_to t.name, @project.id.to_s + ticket_path(t) %>
+						<%= link_to t.name, @project.id.to_s + ticket_path(t) %>, status: <%= t.status.status_name%>
 					</div>
 					
 				<% end %>
 				<br/>
-				<%= link_to "Lägg till ny ticket", new_ticket_path, :class => "btn btn-primary" %>
+				<% if @project.users.include?(@user) %>
+					<%= link_to "Lägg till ny ticket", new_ticket_path, :class => "btn btn-primary" %>
+				<% end %>
 			</p>
 			<% if @user.id == @project.owner_id %>
 				<%= link_to 'Redigera', edit_project_path, :class => "btn btn-primary" %>

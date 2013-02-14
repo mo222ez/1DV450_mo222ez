@@ -6,15 +6,23 @@
 				<li>
 					<%= link_to project.name, project %>
 					<% if project.owner_id == @user.id %>
-						(Admin)
+						<span class="label label-success">
+							Admin
+						</span>
+					<% else %>
+						<span class="label">
+							Medlem
+						</span>
 					<% end %>
 				</li>
 			<% end %>
 			</table>
 			<li class="nav-header">Dina senaste 10 tickets</li>
-			<li>4</li>
-			<li>5</li>
-			<li>6</li>
+			<% @user.tickets.each do |ticket| %>
+				<li>
+					<%= link_to ticket.name, project_path(ticket.project.id) + ticket_path(ticket) %>
+				</li>
+			<% end %>
 		</ul>
 	</div>
 </div>

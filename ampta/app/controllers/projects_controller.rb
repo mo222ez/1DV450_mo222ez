@@ -44,6 +44,9 @@ class ProjectsController < ApplicationController
 
 	def edit
 		@project = Project.find(params[:id])
+		if @user.id != @project.owner_id
+			redirect_to project_path
+		end
 		if session[:failed_validation_update_errors] != nil
 			@session_errors = session[:failed_validation_update_errors]
 			session[:failed_validation_update_errors] = nil

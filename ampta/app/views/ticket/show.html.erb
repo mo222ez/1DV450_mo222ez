@@ -21,8 +21,8 @@
 			<p>
 				
 			</p>
-			<% if @user.id == @ticket.user_id %>
-				<%= link_to 'Redigera ticket', project_path(session[:session_project_id]) + edit_ticket_path(), :class => "btn btn-primary" %>
+			<% if @user.id == @ticket.user_id || @user.id == @ticket.project.owner_id %>
+				<%= link_to 'Redigera ticket', project_path(session[:session_project_id]) + edit_ticket_path, :class => "btn btn-primary" %>
 				<%= link_to 'Ta bort ticket', ticket_path(@ticket), method: :delete, data: { confirm: 'Är du säker på att du vill ta bort denna ticket?' }, :class => "btn btn-danger" %>
 			<% end %>
 		</div>

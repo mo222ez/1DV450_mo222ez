@@ -1,6 +1,6 @@
 <% if @ticket.errors.any? %>
   <div id="error_explanation" class="alert alert-error">
-    <h4><%= @ticket.errors.count %> fel gjorde att projektet inte kunde sparas</h4>
+    <h4><%= @ticket.errors.count %> fel gjorde att ticketen inte kunde sparas</h4>
     <% @ticket.errors.full_messages.each do |msg| %>
         <span><%= msg %></span><br/>
     <% end %>

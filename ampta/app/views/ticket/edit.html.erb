@@ -6,6 +6,14 @@
 				<%= @ticket.name %>
 			</h2>
 			<p>
+				<% if @session_update_errors %>
+				  <div id="error_explanation" class="alert alert-error">
+				    <h4><%= @session_update_errors.count %> fel gjorde att ticketen inte kunde sparas</h4>
+				    <% @session_update_errors.each do |msg| %>
+				        <span><%= msg %></span><br/>
+				    <% end %>
+				  </div>
+				<% end %>
 				<%= render "form" %>
 			</p>
 		</div>
