@@ -5,6 +5,10 @@ class TicketController < ApplicationController
 
   def edit
   	@ticket = Ticket.find(params[:id])
+    @project = @ticket.project
+    if @user.id != @ticket.user_id && @user.id != @ticket.project.owner_id
+      redirect_to project_path(@project)
+    end
   	if session[:failed_ticket_validation_update_errors] != nil
   		@session_update_errors = session[:failed_ticket_validation_update_errors]
   		session[:failed_ticket_validation_update_errors] = nil
@@ -13,6 +17,7 @@ class TicketController < ApplicationController
 
   def update
   	@ticket = Ticket.find(params[:id])
+    @project = @ticket.project
 
   	if @ticket.update_attributes(params[:ticket])
   		# redirect_to session[:session_project_id] + ticket_path(@ticket)
@@ -39,7 +44,7 @@ class TicketController < ApplicationController
   	@ticket = Ticket.new(params[:ticket])
   	@ticket.user_id = @user.id
   	@ticket.project_id = session[:session_project_id]
-
+    
   	if @ticket.save
   		#redirect_to Project.find(session[:session_project_id])
   		session[:failed_ticket] = nil
@@ -53,9 +58,13 @@ class TicketController < ApplicationController
 
   def show
   	@ticket = Ticket.find(params[:id])
+    @project = @ticket.project
   end
 
   def destroy
+    if @user.id != @ticket.user_id && @user.id != @ticket.project.owner_id
+      redirect_to project_path(@project)
+    end
   	@ticket = Ticket.find(params[:id])
   	@ticket.destroy
   	redirect_to project_path(session[:session_project_id])

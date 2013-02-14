@@ -4,7 +4,8 @@ Ampta::Application.routes.draw do
 
   get "projects/:id/tickets/:id/edit" => "ticket#edit"
 
-  get "tickets/new" => "ticket#new", :as => "tickets/new"
+  # get "tickets/new" => "ticket#new", :as => "tickets/new"
+  get "projects/:id/tickets/new" => "ticket#new"
   post "tickets" => "ticket#create", :as => "tickets"
   delete "tickets/:id" => "ticket#destroy"
   put "tickets/:id" => "ticket#update"

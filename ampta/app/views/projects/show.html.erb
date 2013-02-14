@@ -35,7 +35,7 @@
 				<% end %>
 				<br/>
 				<% if @project.users.include?(@user) %>
-					<%= link_to "Lägg till ny ticket", new_ticket_path, :class => "btn btn-primary" %>
+					<%= link_to "Lägg till ny ticket", project_path(session[:session_project_id]) + new_ticket_path, :class => "btn btn-primary" %>
 				<% end %>
 			</p>
 			<% if @user.id == @project.owner_id %>
