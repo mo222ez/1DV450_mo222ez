@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.contrib.auth.models import User, Group
 from django.views.generic import DetailView, ListView
 from AMPTA.models import Project, Ticket, Status
 
@@ -21,6 +22,7 @@ urlpatterns = patterns("",
 	url(r'^projects/(?P<project_id>\d+)/tickets/new$', views.new_ticket, name = "new_ticket" ),
 	url(r'^projects/(?P<project_id>\d+)/tickets/create$', views.create_ticket, name = "create_ticket" ),
 	url(r'^projects/(?P<project_id>\d+)/tickets/(?P<ticket_id>\d+)/delete$', views.delete_ticket, name = "delete_ticket" ),
-
-	
+	# user
+	url(r'^users/$', views.users, name = "users" ),
+	url(r'^users/(?P<user_id>\d+)$', views.show_user, name = "show_user" ),
 )

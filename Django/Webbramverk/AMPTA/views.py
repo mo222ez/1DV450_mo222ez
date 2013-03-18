@@ -3,6 +3,7 @@
 # Create your views here.
 from django.shortcuts import get_list_or_404, get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User, Group
 
 from django.contrib.auth.decorators import login_required, permission_required
 
@@ -199,6 +200,18 @@ def delete_ticket(request, project_id, ticket_id):
 			else:
 				pass
 	return redirect("AMPTA:show_project", str(project_id))
+
+@login_required
+def users(request):
+	inspect_users = User.objects.all();
+	context = { "inspect_users": inspect_users }
+	return render(request, "user/index.html", context)
+
+@login_required
+def show_user(request, user_id):
+	inspect_user = User.objects.get(pk = user_id)
+	context = { "inspect_user": inspect_user }
+	return render(request, "user/show.html", context)
 
 
 
