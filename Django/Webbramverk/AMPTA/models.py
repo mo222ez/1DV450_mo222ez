@@ -24,15 +24,6 @@ class Project(models.Model):
 		return self.members.filter(pk = user.id)
 	def valid_deadline(self):
 		return self.start_date < self.end_date
-	# def clean(self):
-	# 	super(Project, self).clean(*args, **kwargs)
-	# 	if self.start_date > self.end_date:
-	# 		raise ValidationError("Datum för deadline måste ligga efter startdatum")
-
-# class ProjectMember(models.Model):
-# 	"""docstring for ProjectMember"""
-# 	user = models.ForeignKey(User)
-# 	project = models.ForeignKey(Project)
 
 class Status(models.Model):
 	"""docstring for Status"""

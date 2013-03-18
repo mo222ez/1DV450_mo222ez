@@ -45,7 +45,7 @@ def login_user(request):
 		form = LoginForm()
 	return render(request, "login/index.html", { "form": form, "message": message })
 
-
+@login_required
 def logout_user(request):
 	logout(request)
 	return redirect("AMPTA:login")
@@ -90,10 +90,6 @@ def edit_project(request, project_id):
 @login_required
 def new_project(request):
 	form = ProjectForm()
-	# form.fields["name"].widget.attrs = { "class": "input-xlarge" }
-	# form.fields["description"].widget.attrs = { "class": "input-xlarge", "rows": "5" }
-	# form.fields["start_date"].widget.attrs = { "class": "input-small" }
-	# form.fields["end_date"].widget.attrs = { "class": "input-small" }
 	context = { "form": form }
 	return render(request, "projects/new.html", context)
 
@@ -113,6 +109,16 @@ def create_project(request):
 		return redirect("AMPTA:new_project")
 
 @login_required
+def delete_project(request, project_id):
+	project = get_object_or_404(Project, pk = project_id)
+	if project is not None:
+		if request.user.id == project.owner.id:
+			project.delete();
+		else:
+			pass
+	return redirect("AMPTA:index")
+
+@login_required
 def show_ticket(request, project_id, ticket_id):
 	ticket = get_object_or_404(Ticket, pk = ticket_id)
 	context = { "ticket": ticket }
@@ -122,8 +128,9 @@ def show_ticket(request, project_id, ticket_id):
 def edit_ticket(request, project_id, ticket_id):
 	ticket = get_object_or_404(Ticket, pk = ticket_id)
 	project = get_object_or_404(Project, pk = project_id)
-	if request.user.id is not ticket.owner.id:
-		return redirect("AMPTA:show_project", str(project_id))
+	if request.user.id is not project.owner.id:
+		if request.user.id is not ticket.owner.id:
+			return redirect("AMPTA:show_ticket", str(project_id), str(ticket_id))
 
 	if request.method == "POST":
 		form = TicketForm(request.POST, instance = ticket)
@@ -153,7 +160,6 @@ def new_ticket(request, project_id):
 		return render(request, "tickets/new.html", context)
 	else:
 		return redirect("AMPTA:show_project", str(project_id))
-	
 
 @login_required
 def create_ticket(request, project_id):
@@ -168,7 +174,6 @@ def create_ticket(request, project_id):
 			ticket = form.save();
 			context = { "project_id": project.id, "ticket": ticket }
 			return redirect("AMPTA:show_ticket", str(project_id), str(ticket.id))
-			# return render(request, "tickets/show.html", { "project_id": project, "ticket_id": ticket })
 		else:
 			message = "Felaktig formulärdata"
 			return render(request, "tickets/new.html", { "project": project, "form": form, "message": message })
@@ -176,6 +181,24 @@ def create_ticket(request, project_id):
 		form = TicketForm()
 		context = { "project": project, "form": form }
 		return render(request, "tickets/new.html", context)
+
+@login_required
+def delete_ticket(request, project_id, ticket_id):
+	project = get_object_or_404(Project, pk = project_id)
+	ticket = get_object_or_404(Ticket, pk = ticket_id)
+	if request.user.id is not project.owner.id:
+		if request.user.id is not ticket.owner.id:
+			return redirect("AMPTA:show_ticket", str(project_id), str(ticket_id))
+
+	if project is not None:
+		if ticket is not None:
+			if request.user.id == ticket.owner.id:
+				ticket.delete();
+			elif request.user.id == project.owner.id:
+				ticket.delete();
+			else:
+				pass
+	return redirect("AMPTA:show_project", str(project_id))
 
 
 

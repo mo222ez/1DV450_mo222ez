@@ -25,9 +25,9 @@
 				<p>
 					
 				</p>
-				{% if ticket|ownership:user.id %}
+				{% if ticket|ownership:user.id or ticket.project.owner.id == user.id %}
 					<a href="{% url 'AMPTA:edit_ticket' ticket.project.id ticket.id %}" class="btn btn-primary">Redigera ticket</a>
-					<a href="#" class="btn btn-danger">Ta bort ticket</a>
+					<a href="{% url 'AMPTA:delete_ticket' ticket.project.id ticket.id %}" class="btn btn-danger">Ta bort ticket</a>
 				{% endif %}
 				<p>
 					<a href="{% url 'AMPTA:show_project' ticket.project.id %}">Tillbaka</a>
