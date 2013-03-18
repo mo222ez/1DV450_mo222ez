@@ -1,0 +1,78 @@
+{% extends "shared/base.html" %}
+
+{% block main_content %}
+	<div class="row-fluid">
+		{% include "shared/projects_navbar.html" %}
+		<div class="span9">
+			<div class="alert alert-info">
+				{% if user in project.members.all %}
+					{% if user.id == project.owner_id %}
+						<strong>Du har fulla rättigheter till detta projekt</strong>
+					{% else %}
+						<strong>Du kan lägga till tickets i detta projekt</strong>
+					{% endif %}
+				{% else %}
+					<strong>Du har inga rättigheter i detta projekt</strong>
+				{% endif %}
+			</div>
+			<div class="hero-unit">
+				<h2>{{ project.name }}</h2>
+				<p>
+					<strong>Startdatum: </strong>{{ project.start_date }}
+				</p>
+				<p>
+					<strong>Slutdatum: </strong>{{project.end_date }}
+				</p>
+				<p>
+					<strong>Användare: </strong> <br/>
+					{% for u in project.members.all %}
+						{{ u.username }}
+						<br/>
+					{% endfor%}
+				</p>
+
+				<p>
+				<strong>Tickets: </strong> <br/>
+					{% for ticket in tickets.all %}
+						<div class="ticket">
+							<a href="{% url 'AMPTA:show_ticket' ticket.project.id ticket.id %}">
+								{{ ticket.name }}
+							</a>
+							{% if ticket.status_id == 1 %}
+								<span class="label label-important">
+									{{ ticket.status.status_name }}
+								</span>
+							{% elif ticket.status_id == 2 %}
+								<span class="label label-warning">
+									{{ ticket.status.status_name }}
+								</span>
+							{% endif %}
+
+							{% if ticket.owner_id == user.id %}
+								<span class="label label-success">Ägare</span>
+							{% endif %}
+						</div>
+					{% endfor %}
+					<br/>
+					{% if user in project.members.all %}
+						{% if user.id == project.owner_id %}
+							<a href="{% url 'AMPTA:edit_project' project.id %}" class="btn btn-primary">
+								Redigera
+							</a>
+							<a href="#" class="btn btn-danger">
+								Ta bort projektet
+							</a>
+							<a href="{% url 'AMPTA:new_ticket' project.id %}" class="btn btn-primary">
+								Lägg till ny ticket
+							</a>
+						{% else %}
+							<a href="#" class="btn btn-primary">
+								Lägg till ny ticket
+							</a>
+						{% endif %}
+					{% endif %}
+				</p>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+#main_container
+{
+	padding-top: 50px;
+}
+
+#logout_button
+{
+	
+}
+
+#logout_button a
+{
+	line-height: 35px;
+}
+
+#login_form_wrapper
+{
+	width: 350px;
+	margin: 0 auto;
+	position: relative;
+}
+
+#login_form_wrapper h1
+{
+	text-align: center;
+	padding-bottom: 25px;
+}
+
+.project_form
+{
+	margin-top: 50px;
+	margin-left: -80px;
+	width: 575px;
+}
+
+.project_form .date_group .controls select
+{
+	width: 125px;
+}

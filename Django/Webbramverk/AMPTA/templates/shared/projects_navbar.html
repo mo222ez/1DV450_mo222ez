@@ -1,0 +1,29 @@
+<div class="span3">
+	<div class="well sidebar-nav">
+		<ul class="nav nav-list">
+			<li class="nav-header">Dina projekt</li>
+			{% for project in user.projects.all %}
+				<li>
+					<a href="{% url 'AMPTA:show_project' project.id %}">{{ project.name }}</a>
+					{% if project.owner_id == user.id %}
+						<span class="label label-success">
+							Admin
+						</span>
+					{% else %}
+						<span class="label">
+							Medlem
+						</span>
+					{% endif %}
+				</li>
+			{% endfor %}
+			<li class="nav-header">Dina senaste 10 tickets</li>
+			{% for ticket in user.tickets.all %}
+				<li>
+					<a href="{% url 'AMPTA:show_ticket' ticket.project.id ticket.id %}">
+						{{ ticket.name }}
+					</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>

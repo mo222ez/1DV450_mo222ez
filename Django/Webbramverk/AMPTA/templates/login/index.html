@@ -1,0 +1,21 @@
+{% extends "shared/base.html" %}
+
+{% block main_content %}
+	<div id="login_form_wrapper">
+		<h1>Login</h1>
+		<form action="{% url 'AMPTA:login' %}" method="post">
+			{% csrf_token %}
+			<div class="field">
+				{{ form.username }}
+			</div>
+
+			<div class="field">
+				{{ form.password }}
+			</div>
+
+			<div class="action">
+				<input type="submit" value="Logga in" class="btn btn-large btn-block btn-primary">
+			</div>
+		</form>
+	</div>
+{% endblock %}

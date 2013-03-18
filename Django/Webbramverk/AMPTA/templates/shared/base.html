@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ampta</title>
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-responsive.css">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/style.css">
+</head>
+<body>
+	{% if user.is_authenticated %}
+		{% include "shared/menu.html" %}
+	{% endif %}
+	<div class="container-fluid" id="main_container">
+		{% block main_content %}
+			
+		{% endblock %}
+	</div>
+</body>
+</html>

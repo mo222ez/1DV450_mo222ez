@@ -1,0 +1,59 @@
+{% extends "shared/base.html" %}
+
+{% block main_content %}
+	<div class="row-fluid">
+		{% include "shared/projects_navbar.html" %}
+		<div class="span9">
+			<div class="hero-unit">
+				<h2>Redigera ticket: <i>{{ ticket.name }}</i></h2>
+				<p>
+					{% if form.errors %}
+						<div id="error_explanation" class="alert alert-error">
+							<h4>{{ form.errors.items|length }} fel i formuläret</h4>
+							{% for key, value in form.errors.items %}
+								<span>
+									{{ value.as_text }}<br/>
+								</span>
+							{% endfor %}
+						</div>
+					{% endif %}
+					<form action="{% url 'AMPTA:edit_ticket' project.id ticket.id %}" method="post">
+						{% csrf_token %}
+						<input type="hidden" value="{{ project.id }}" name="project_id">
+
+						<div class="control-group">
+							<label class="control-label">
+								Namn
+							</label>
+							<div class="controls">
+								{{ form.name }}
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label class="control-label">
+								Beskrivning
+							</label>
+							<div class="controls">
+								{{ form.description }}
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label class="control-label">
+								Status
+							</label>
+							<div class="controls">
+								{{ form.status }}
+							</div>
+						</div>
+
+						<div class="action">
+							<input type="submit" value="Spara ticket" class="btn btn-large btn-primary">
+						</div>
+					</form>
+				</p>
+			</div>
+		</div>
+	</div>
+{% endblock %}

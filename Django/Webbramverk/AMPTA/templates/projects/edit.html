@@ -1,0 +1,68 @@
+{% extends "shared/base.html" %}
+
+{% block main_content %}
+	<div class="row-fluid">
+		{% include "shared/projects_navbar.html" %}
+		<div class="span9">
+			<div class="hero-unit">
+				<h2>Redigera projekt: <i>{{ project.name }}</i></h2>
+				<p>
+					{% if form.errors %}
+						<div id="error_explanation" class="alert alert-error">
+							<h4>{{ form.errors.items|length }} fel i formuläret</h4>
+							{% for key, value in form.errors.items %}
+								<span>
+									{{ value.as_text }}<br/>
+								</span>
+							{% endfor %}
+						</div>
+					{% endif %}
+					<form action="{% url 'AMPTA:create_project' %}" method="post" class="form-horizontal project_form">
+						{% csrf_token %}
+						<div class="control-group">
+							<label class="control-label">Namn</label>
+							<div class="controls">
+								{{ form.name }}
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label class="control-label">Beskrivning</label>
+							<div class="controls">
+								{{ form.description }}
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label class="control-label">Startdatum</label>
+							<div class="controls">
+								{{ form.start_date }}
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label class="control-label">Slutdatum</label>
+							<div class="controls">
+								{{ form.end_date }}
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label class="control-label">Medlemmar</label>
+							<div class="controls">
+								{{ form.members }}
+							</div>
+						</div>
+
+						<div class="actions control-group">
+							<div class="controls">
+								<input type="submit" value="Skapa projekt" class="btn btn-large btn-primary">
+							</div>
+						</div>
+					</form>
+				</p>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
