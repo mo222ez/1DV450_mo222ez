@@ -1,0 +1,11 @@
+{% if form.errors %}
+	<div id="error_explanation" class="alert alert-error">
+		<h4>{{ form.errors.items|length }} fel i formuläret</h4>
+		{% for key, value in form.errors.items %}
+			<span>
+				{{ value.as_text }}<br/>
+			</span>
+		{% endfor %}
+	</div>
+{% endif %}
+

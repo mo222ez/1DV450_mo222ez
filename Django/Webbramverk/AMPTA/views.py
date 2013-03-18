@@ -66,15 +66,34 @@ def show_project(request, project_id):
 @login_required
 def edit_project(request, project_id):
 	project = get_object_or_404(Project, pk = project_id)
-	return render(request, "projects/edit.html")
+	if request.user.id is not project.owner.id:
+		return redirect("AMPTA:show_project", str(project_id))
+	if request.method == "POST":
+		form = ProjectForm(request.POST, instance = project)
+		if form.is_valid():
+			project = form.save(commit = False)
+			if request.user not in project.members.all():
+				project.members.add(request.user)
+			project.save()
+			context = { "project": project }
+			return redirect("AMPTA:show_project", str(project_id))
+		else:
+			message = "Felaktig formulärdata"
+			return render(request, "projects/edit.html", { "project": project, "form": form, "message": message })
+	if project is not None:
+		form = ProjectForm(instance = project)
+		context = { "project": project, "form": form }
+		return render(request, "projects/edit.html", context)
+	else:
+		return render(request, "index.html")
 
 @login_required
 def new_project(request):
 	form = ProjectForm()
-	form.fields["name"].widget.attrs = { "class": "input-xlarge" }
-	form.fields["description"].widget.attrs = { "class": "input-xlarge", "rows": "5" }
-	form.fields["start_date"].widget.attrs = { "class": "input-small" }
-	form.fields["end_date"].widget.attrs = { "class": "input-small" }
+	# form.fields["name"].widget.attrs = { "class": "input-xlarge" }
+	# form.fields["description"].widget.attrs = { "class": "input-xlarge", "rows": "5" }
+	# form.fields["start_date"].widget.attrs = { "class": "input-small" }
+	# form.fields["end_date"].widget.attrs = { "class": "input-small" }
 	context = { "form": form }
 	return render(request, "projects/new.html", context)
 
@@ -92,25 +111,6 @@ def create_project(request):
 			return render(request, "projects/new.html", { "form": form, "message": message })
 	else:
 		return redirect("AMPTA:new_project")
-	# project = get_object_or_404(Project, pk = project_id)
-	# if request.user not in project.members.all():
-	# 	return redirect("AMPTA:show_project", str(project_id))
-	# if request.method == "POST":
-	# 	form = TicketForm(request.POST)
-	# 	if form.is_valid():
-	# 		form.instance.owner = request.user
-	# 		form.instance.project = project
-	# 		ticket = form.save();
-	# 		context = { "project_id": project.id, "ticket": ticket }
-	# 		return redirect("AMPTA:show_ticket", str(project_id), str(ticket.id))
-	# 		# return render(request, "tickets/show.html", { "project_id": project, "ticket_id": ticket })
-	# 	else:
-	# 		message = "Felaktig formulärdata"
-	# 		return render(request, "tickets/new.html", { "project": project, "form": form, "message": message })
-	# else:
-	# 	form = TicketForm()
-	# 	context = { "project": project, "form": form }
-	# 	return render(request, "tickets/new.html", context)
 
 @login_required
 def show_ticket(request, project_id, ticket_id):
@@ -128,22 +128,12 @@ def edit_ticket(request, project_id, ticket_id):
 	if request.method == "POST":
 		form = TicketForm(request.POST, instance = ticket)
 		if form.is_valid():
-			ticket = form.save();
+			ticket = form.save()
 			context = { "project_id": project_id, "ticket": ticket }
 			return redirect("AMPTA:show_ticket", str(project_id), str(ticket_id))
 		else:
 			message = "Felaktig formulärdata"
 			return render(request, "tickets/edit.html", { "project": project, "ticket": ticket , "form": form, "message": message })
-		# if form.is_valid():
-		# 	form.instance.owner = request.user
-		# 	form.instance.project = project
-		# 	ticket = form.save();
-		# 	context = { "project_id": project.id, "ticket": ticket }
-		# 	return redirect("AMPTA:show_ticket", str(project_id), str(ticket.id))
-		# 	# return render(request, "tickets/show.html", { "project_id": project, "ticket_id": ticket })
-		# else:
-		# 	message = "Felaktig formulärdata"
-		# 	return render(request, "tickets/new.html", { "project": project, "form": form, "message": message })
 	if ticket is not None and project is not None:
 		form = TicketForm(instance = ticket)
 		context = { "project": project, "ticket": ticket, "form": form }
