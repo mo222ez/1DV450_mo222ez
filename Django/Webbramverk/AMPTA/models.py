@@ -43,8 +43,8 @@ class Ticket(models.Model):
 
 class LoginForm(forms.Form):
 	"""docstring for LoginForm"""
-	username = forms.CharField(max_length = 30)
-	password = forms.CharField(max_length = 30, widget = forms.PasswordInput)
+	username = forms.CharField(max_length = 30, widget = forms.TextInput(attrs = { "class": "input-block-level" }))
+	password = forms.CharField(max_length = 30, widget = forms.PasswordInput(attrs = { "class": "input-block-level" }))
 
 class TicketForm(ModelForm):
 	"""docstring for ClassName"""
