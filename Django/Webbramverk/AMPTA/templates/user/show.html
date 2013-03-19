@@ -9,14 +9,34 @@
 				<h1>{{ inspect_user.username }}</h1>
 				<h3>{{ inspect_user.first_name }} {{ inspect_user.last_name }}</h3>
 				<div id="user_details">
-					<p class="left_side">
+					<p>
+						<strong>Användarnamn: </strong> {{ inspect_user.username }}
+					</p>
+
+					<p>
+						<strong>Namn: </strong> {{ inspect_user.first_name }} {{ inspect_user.last_name }}
+					</p>
+
+					<p>
+						<strong>Registrerad: </strong> {{ inspect_user.date_joined }}
+					</p>
+
+					<p>
+						<strong>Senast inloggad: </strong> {{ inspect_user.last_login }}
+					</p>
+					<!-- <p class="left_side">
 						<strong>
 							Användarnamn:
 						</strong>
 					</p>
 					<p class="right_side">
 						{{ inspect_user.username }}
-					</p>
+					</p> -->
+					{% if user.is_superuser or user.id == inspect_user.id %}
+						<a href="{% url 'AMPTA:edit_user' inspect_user.id %}" class="btn btn-primary">
+							Redigera
+						</a>
+					{% endif %}
 				</div>
 				<p>
 					{{ inspect_user. }}

@@ -1,0 +1,56 @@
+{% extends "shared/base.html" %}
+
+{% block main_content %}
+	<div class="row-fluid">
+		{% include "shared/projects_navbar.html" %}
+		<div class="span9">
+			<div class="hero-unit">
+				<h1>Alla medlemmar</h1>
+				{% if inspect_users %}
+					<br/>
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Användarnamn</th>
+								<th>Förnamn</th>
+								<th>Efternamn</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for inspect_user in inspect_users %}
+								<tr>
+									<td>
+										{{ inspect_user.id }}
+									</td>
+									<td>
+										{{ inspect_user.username }}
+									</td>
+									<td>
+										{{ inspect_user.first_name }}
+									</td>
+									<td>
+										{{ inspect_user.last_name }}
+									</td>
+									<td>
+										<a href="{% url 'AMPTA:show_user' inspect_user.id %}">Visa</a>
+									</td>
+									<td>
+										{% if user.is_superuser or user.id == inspect_user.id %}
+											<a href="{% url 'AMPTA:edit_user' inspect_user.id %}">Redigera</a>
+										{% endif %}
+									</td>
+								</tr>
+								<!-- <div>
+									<span>
+										<a href="{% url 'AMPTA:show_user' inspect_user.id %}">{{ inspect_user.username }}</a>
+									</span>
+								</div> -->
+							{% endfor %}
+						</tbody>
+					</table>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

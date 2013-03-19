@@ -25,4 +25,5 @@ urlpatterns = patterns("",
 	# user
 	url(r'^users/$', views.users, name = "users" ),
 	url(r'^users/(?P<user_id>\d+)$', views.show_user, name = "show_user" ),
+	url(r'^users/(?P<user_id>\d+)/edit$', views.edit_user, name = "edit_user" ),
 )

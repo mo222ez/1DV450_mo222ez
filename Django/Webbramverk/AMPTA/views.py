@@ -14,7 +14,7 @@ from django.forms import forms
 
 from django.core.urlresolvers import reverse
 
-from AMPTA.models import Project, Ticket, Status, LoginForm, TicketForm, ProjectForm
+from AMPTA.models import Project, Ticket, Status, LoginForm, TicketForm, ProjectForm, UserForm
 
 @login_required
 def index(request):
@@ -203,7 +203,7 @@ def delete_ticket(request, project_id, ticket_id):
 
 @login_required
 def users(request):
-	inspect_users = User.objects.all();
+	inspect_users = get_list_or_404(User);
 	context = { "inspect_users": inspect_users }
 	return render(request, "user/index.html", context)
 
@@ -212,6 +212,31 @@ def show_user(request, user_id):
 	inspect_user = User.objects.get(pk = user_id)
 	context = { "inspect_user": inspect_user }
 	return render(request, "user/show.html", context)
+
+@login_required
+def edit_user(request, user_id):
+	inspect_user = get_object_or_404(User, pk = user_id)
+	
+	if request.user.id is not inspect_user.id:
+		if request.user.is_superuser is not True:
+			return redirect("AMPTA:index")
+
+	if inspect_user is not None:
+		if request.method == "POST":
+			form = UserForm(request.POST, instance = inspect_user)
+			if form.is_valid():
+				inspect_user = form.save()
+				context = { "inspect_user": inspect_user }
+				return redirect("AMPTA:show_user", str(inspect_user.id))
+			else:
+				message = "Felaktig formulärdata"
+				return render(request, "user/edit.html", { "inspect_user": inspect_user, "form": form })
+		else:
+			form = UserForm(instance = inspect_user)
+			context = { "inspect_user": inspect_user, "form": form }
+			return render(request, "user/edit.html", context)
+	else:
+		return redirect("AMPTA:index")
 
 
 

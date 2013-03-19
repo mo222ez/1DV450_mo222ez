@@ -53,7 +53,6 @@ class TicketForm(ModelForm):
 		exclude = ("project"), ("owner")
 
 class ProjectForm(ModelForm):
-	# members = forms.ModelMultipleChoiceField(queryset = ))
 	name = forms.CharField(widget = forms.TextInput(attrs = { "class": "input-xlarge" }))
 	description = forms.CharField(widget = forms.Textarea(attrs = { "class": "input-xlarge" }))
 	start_date = forms.DateField(initial = timezone.now(), widget = forms.DateInput(attrs = { "class": "span12", "readonly": "" }))
@@ -69,6 +68,15 @@ class ProjectForm(ModelForm):
 		if start_date > end_date:
 			raise forms.ValidationError("Datum för deadline måste ligga efter startdatum")
 		return cleaned_data
+
+class UserForm(ModelForm):
+	first_name = forms.CharField(widget = forms.TextInput(attrs = { "class": "input-xlarge", "placeholder": "Förnamn" }))
+	last_name = forms.CharField(widget = forms.TextInput(attrs = { "class": "input-xlarge", "placeholder": "Efternamn" }))
+	email = forms.EmailField(widget = forms.TextInput(attrs = { "class": "input-xlarge", "placeholder": "Epost" }))
+	class Meta:
+		model = User
+		exclude = ("id"), ("password"), ("last_login"), ("is_superuser"), ("username"), ("is_staff"), ("is_active"), ("date_joined")
+			
 		
 
 

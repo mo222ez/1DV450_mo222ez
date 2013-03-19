@@ -25,13 +25,12 @@
 					<a class="btn btn-primary" href="{% url 'AMPTA:show_user' user.id %}"><i class="icon-user icon-white"></i> {{ user.username }}</a>
 					<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="#"><i class="icon-pencil"></i> Redigera</a></li>
-						<!-- <li><a href="#"><i class="icon-trash"></i> Delete</a></li> -->
+						<li><a href="{% url 'AMPTA:edit_user' user.id %}"><i class="icon-pencil"></i> Redigera</a></li>
+						<li class="divider"></li>
+						<li><a href="{% url 'AMPTA:users' %}"> Användare</a></li>
 						{% if user.is_superuser %}
-							<li class="divider"></li>
 							<li><a href="{% url 'admin:index' %}"> Administration</a></li>
 						{% endif %}
-						<!-- <li class="divider"></li> -->
 						<li><a href="{% url 'AMPTA:logout' %}"><i class="i"></i> Logga ut</a></li>
 					</ul>
 				</div>
