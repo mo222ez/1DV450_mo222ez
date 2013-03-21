@@ -32,7 +32,7 @@
 				</p>
 
 				<p>
-				<strong>Tickets: </strong> <br/>
+					<strong>Tickets: </strong> <br/>
 					{% for ticket in tickets.all %}
 						<div class="ticket">
 							<a href="{% url 'AMPTA:show_ticket' ticket.project.id ticket.id %}">
