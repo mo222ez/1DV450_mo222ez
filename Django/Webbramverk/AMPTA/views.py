@@ -37,12 +37,11 @@ def login_user(request):
 			if user is not None:
 				if user.is_active:
 					login(request, user)
-					request.session["has_logged_in"] = True
 					return redirect("AMPTA:index")
 				else:
 					return HttpResponse("<h1>Konto inaktiverat</h1>")	
 			else:
-				message = "<h1>Fel login</h1>"
+				message = "Fel användarnamn eller lösenord"
 	else:
 		form = LoginForm()
 	return render(request, "login/index.html", { "form": form, "message": message })

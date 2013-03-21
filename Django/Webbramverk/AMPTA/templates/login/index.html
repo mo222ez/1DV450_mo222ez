@@ -3,9 +3,9 @@
 {% block main_content %}
 	<div id="login_form_wrapper">
 		<h1>Login</h1>
-		{% if form.errors %}
+		{% if message %}
 			<div id="error_explanation" class="alert alert-error">
-				<h4>Fel användarnamn eller lösenord</h4>
+				<h4>{{ message }}</h4>
 			</div>
 		{% endif %}
 		<form action="{% url 'AMPTA:login' %}" method="post">
