@@ -11,7 +11,6 @@ from django import forms
 # Create your models here.
 class Project(models.Model):
 	"""docstring for Project"""
-	# project_members = models.ManyToManyField(User, through = "ProjectMember")
 	members = models.ManyToManyField(User, related_name = "projects", error_messages = { "required": "hello" })
 	name = models.CharField(max_length = 50, blank = False)
 	description = models.TextField(blank = False)
@@ -53,11 +52,11 @@ class TicketForm(ModelForm):
 		exclude = ("project"), ("owner")
 
 class ProjectForm(ModelForm):
+	"""docstring for ProjectForm"""
 	name = forms.CharField(widget = forms.TextInput(attrs = { "class": "input-xlarge" }))
 	description = forms.CharField(widget = forms.Textarea(attrs = { "class": "input-xlarge" }))
 	start_date = forms.DateField(initial = timezone.now(), widget = forms.DateInput(attrs = { "class": "span12", "readonly": "" }))
 	end_date = forms.DateField(initial = timezone.now() + datetime.timedelta(days = 5), widget = forms.DateInput(attrs = { "class": "span12", "readonly": "" }))
-	"""docstring for ProjectForm"""
 	class Meta:
 		model = Project
 		exclude = ("owner")

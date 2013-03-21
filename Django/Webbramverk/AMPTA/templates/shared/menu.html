@@ -9,15 +9,15 @@
 			<a href="#" class="brand">AMPTA</a>
 			<div class="nav-collapse collapse">
 				<ul class="nav pull-left">
-					<li class="">
+					<li {% if page = "index" %} class="active" {% endif %}>
 						<a href="{% url 'AMPTA:index' %}">Start</a>
 					</li>
 
-					<li class="">
+					<li {% if page = "projects" %} class="active" {% endif %}>
 						<a href="{% url 'AMPTA:projects' %}">All projekt</a>
 					</li>
 
-					<li class="">
+					<li {% if page = "new_project" %} class="active" {% endif %}>
 						<a href="{% url 'AMPTA:new_project' %}">Skapa projekt</a>
 					</li>
 				</ul>

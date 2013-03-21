@@ -18,8 +18,9 @@ from AMPTA.models import Project, Ticket, Status, LoginForm, TicketForm, Project
 
 @login_required
 def index(request):
-	# projects = Project.objects
-	return render(request, "index.html")
+	page = "index"
+	context = { "page": page }
+	return render(request, "index.html", context)
 
 def login_user(request):
 	if request.user.is_authenticated():
@@ -54,19 +55,22 @@ def logout_user(request):
 @login_required
 def projects(request):
 	projects = get_list_or_404(Project)
-	context = { "projects": projects }
+	page = "projects"
+	context = { "projects": projects, "page": page }
 	return render(request, "projects/index.html", context)
 
 @login_required
 def show_project(request, project_id):
 	project = get_object_or_404(Project, pk = project_id)
 	tickets = Ticket.objects.filter(project = project)
-	context = { "project": project, "tickets": tickets }
+	page = "projects"
+	context = { "project": project, "tickets": tickets, "page": page }
 	return render(request, "projects/show.html", context)
 
 @login_required
 def edit_project(request, project_id):
 	project = get_object_or_404(Project, pk = project_id)
+	page = "projects"
 	if request.user.id is not project.owner.id:
 		return redirect("AMPTA:show_project", str(project_id))
 	if request.method == "POST":
@@ -80,7 +84,7 @@ def edit_project(request, project_id):
 			return redirect("AMPTA:show_project", str(project_id))
 		else:
 			message = "Felaktig formulärdata"
-			return render(request, "projects/edit.html", { "project": project, "form": form, "message": message })
+			return render(request, "projects/edit.html", { "project": project, "form": form, "message": message, "page": page })
 	if project is not None:
 		form = ProjectForm(instance = project)
 		context = { "project": project, "form": form }
@@ -91,11 +95,13 @@ def edit_project(request, project_id):
 @login_required
 def new_project(request):
 	form = ProjectForm()
-	context = { "form": form }
+	page = "new_project"
+	context = { "form": form, "page": page }
 	return render(request, "projects/new.html", context)
 
 @login_required
 def create_project(request):
+	page = "new_project"
 	if request.method == "POST":
 		form = ProjectForm(request.POST)
 		if form.is_valid():
@@ -105,7 +111,7 @@ def create_project(request):
 			return redirect("AMPTA:show_project", str(project.id))
 		else:
 			message = "Felaktig formulärdata"
-			return render(request, "projects/new.html", { "form": form, "message": message })
+			return render(request, "projects/new.html", { "form": form, "message": message, "page": page })
 	else:
 		return redirect("AMPTA:new_project")
 
@@ -122,13 +128,15 @@ def delete_project(request, project_id):
 @login_required
 def show_ticket(request, project_id, ticket_id):
 	ticket = get_object_or_404(Ticket, pk = ticket_id)
-	context = { "ticket": ticket }
+	page = "projects"
+	context = { "ticket": ticket, "page": page }
 	return render(request, "tickets/show.html", context)
 
 @login_required
 def edit_ticket(request, project_id, ticket_id):
 	ticket = get_object_or_404(Ticket, pk = ticket_id)
 	project = get_object_or_404(Project, pk = project_id)
+	page = "projects"
 	if request.user.id is not project.owner.id:
 		if request.user.id is not ticket.owner.id:
 			return redirect("AMPTA:show_ticket", str(project_id), str(ticket_id))
@@ -141,23 +149,23 @@ def edit_ticket(request, project_id, ticket_id):
 			return redirect("AMPTA:show_ticket", str(project_id), str(ticket_id))
 		else:
 			message = "Felaktig formulärdata"
-			return render(request, "tickets/edit.html", { "project": project, "ticket": ticket , "form": form, "message": message })
+			return render(request, "tickets/edit.html", { "project": project, "ticket": ticket , "form": form, "message": message, "page": page })
 	if ticket is not None and project is not None:
 		form = TicketForm(instance = ticket)
-		context = { "project": project, "ticket": ticket, "form": form }
+		context = { "project": project, "ticket": ticket, "form": form, "page": page }
 		return render(request, "tickets/edit.html", context)
 	elif project is not None:
-		return render(request, "project/show.html", { "project": project })
+		return render(request, "project/show.html", { "project": project, "page": page })
 	else:
-		return render(request, "index.html")
+		return render(request, "index.html", { "page": page })
 
 @login_required
 def new_ticket(request, project_id):
 	project = get_object_or_404(Project, pk = project_id)
-
+	page = "projects"
 	if request.user in project.members.all():
 		form = TicketForm()
-		context = { "project": project, "form": form }
+		context = { "project": project, "form": form, "page": page }
 		return render(request, "tickets/new.html", context)
 	else:
 		return redirect("AMPTA:show_project", str(project_id))
@@ -165,6 +173,7 @@ def new_ticket(request, project_id):
 @login_required
 def create_ticket(request, project_id):
 	project = get_object_or_404(Project, pk = project_id)
+	page = "projects"
 	if request.user not in project.members.all():
 		return redirect("AMPTA:show_project", str(project_id))
 	if request.method == "POST":
@@ -177,10 +186,10 @@ def create_ticket(request, project_id):
 			return redirect("AMPTA:show_ticket", str(project_id), str(ticket.id))
 		else:
 			message = "Felaktig formulärdata"
-			return render(request, "tickets/new.html", { "project": project, "form": form, "message": message })
+			return render(request, "tickets/new.html", { "project": project, "form": form, "message": message, "page": page })
 	else:
 		form = TicketForm()
-		context = { "project": project, "form": form }
+		context = { "project": project, "form": form, "page": page }
 		return render(request, "tickets/new.html", context)
 
 @login_required
