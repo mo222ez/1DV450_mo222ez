@@ -32,35 +32,21 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('home.index');
-});
+Route::get('/', array('as' => 'home', 'uses' => 'post@index'));
 
-Route::get('/(:any)', function ($name)
-{
-	$context = array('name' => $name);
-	return View::make('test.index', $context);
-});
+Route::get('/view/(:num)', array('as' => 'view_post', 'uses' => 'post@view'));
 
-//account
+Route::get('admin', array('as' => 'new_post', 'before' => 'auth', 'uses' => 'admin@new'));
 
-//Route::controller('account');
+Route::post('admin', array('as' => 'new_post', 'before' => 'auth', 'uses' => 'admin@create'));
 
-Route::get('/superwelcome/(:any)/(:any)',function ($name, $place)
-{
-	return View::make('account.welcome');
-});
+Route::controller('login');
 
-Route::get('account/profile', array('as' => 'profile', 'do' => function ()
-{
-	return View::make('account/profile');
-}));
+Route::get('login', array('as' => 'login', 'uses' => 'admin@index'));
 
-Route::get('/', function ()
-{
-	return Redirect::to_route('profile');
-});
+Route::post('login', array('as' => 'login', 'uses' => 'admin@login'));
+
+Route::get('logout', array('as' => 'logout', 'uses' => 'admin@logout'));
 
 /*
 |--------------------------------------------------------------------------

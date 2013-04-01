@@ -1,0 +1,82 @@
+/* @override 
+	http://localhost:8000/static/css/style.css */
+
+#main_container
+{
+	padding-top: 50px;
+}
+
+#logout_button
+{
+	
+}
+
+#logout_button a
+{
+	line-height: 35px;
+}
+
+#login_form_wrapper
+{
+	width: 350px;
+	margin: 0 auto;
+	position: relative;
+}
+
+#login_form_wrapper h1
+{
+	text-align: center;
+	padding-bottom: 25px;
+}
+
+.project_form
+{
+	margin-top: 50px;
+	margin-left: -80px;
+	width: 575px;
+}
+
+.project_form .date_group .controls select
+{
+	width: 125px;
+}
+
+.controls.input-append
+{
+	margin-left: 20px;
+}
+
+#user_details
+{
+	
+}
+
+	#user_details .left_side
+	{
+		float: left;
+		width: 35%;
+		text-align: right;
+	}
+
+	#user_details .right_side
+	{
+		border: 1px solid red;
+		float: right;
+		width: 65%;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
