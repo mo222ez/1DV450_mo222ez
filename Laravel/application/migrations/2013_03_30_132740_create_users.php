@@ -20,7 +20,7 @@ class Create_Users {
 		DB::table('users')->insert(array(
 		    'username'  => 'admin',
 		    'nickname'  => 'Admin',
-		    'password'  => Hash::make('spela0')
+		    'password'  => Hash::make('admin')
 		));
 	}
 
