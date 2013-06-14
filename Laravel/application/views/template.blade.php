@@ -11,9 +11,9 @@
   <body>
     <div class="container" id="main_container">
       @if (Auth::user())
-        {{ HTML::link('logout', 'Logout') }}
+        {{ HTML::link_to_route('logout', 'Logout') }}
       @else
-        {{ HTML::link('login', 'Login') }}
+        {{ HTML::link_to_route('login', 'Login') }}
       @endif
       @yield('main_content')
     </div>

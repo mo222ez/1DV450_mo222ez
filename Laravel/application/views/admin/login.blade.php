@@ -5,7 +5,7 @@
 @endsection
 
 @section('main_content')
-    {{ Form::open('login', 'POST', array('id' => 'login_form_wrapper')) }}
+    {{ Form::open(URL::to_route('login_post'), 'POST', array('id' => 'login_form_wrapper')) }}
         {{ Form::token() }}
         <!-- check for login errors flash var -->
         @if (Session::has('login_errors'))

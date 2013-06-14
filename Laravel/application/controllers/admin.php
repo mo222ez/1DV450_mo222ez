@@ -4,7 +4,6 @@ class Admin_Controller extends Base_Controller {
 	
 	public function action_index()
 	{
-		//return Redirect::to_route('login');
 		return view::make('admin.login');
 	}
 
@@ -34,7 +33,8 @@ class Admin_Controller extends Base_Controller {
 	public function action_new()
 	{
 		$user = Auth::user();
-		return view::make('admin.new')->with('user', $user);
+		$context = array('user' => $user);
+		return view::make('admin.new', $context);
 	}
 
 	public function action_create()
@@ -61,8 +61,7 @@ class Admin_Controller extends Base_Controller {
 
 		$post = new Post($new_post);
 		$post->save();
-
-		return Redirect::to('view/' . $post->id);
+		return Redirect::to_route('view_post', $post->id);
 	}
 }
 

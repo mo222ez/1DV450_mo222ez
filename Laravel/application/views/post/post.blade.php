@@ -6,17 +6,17 @@
 
 @section('main_content')
     <div class="post">
-			<h1>
-				{{ HTML::link('view/' . $post->id, $post->title) }}
-			</h1>
-			<p>
-				{{ $post->content }}
-			</p>
-			<p>
-				{{ $author->username }}
-			</p>
-			<p>
-				{{ HTML::link('/', '&larr; Back to index') }}
-			</p>
-		</div>
+		<h1>
+			{{ HTML::link_to_route('view_post', $post->title, $post->id) }}
+		</h1>
+		<p>
+			{{ $post->content }}
+		</p>
+		<p>
+			{{ $author->username }}
+		</p>
+		<p>
+			{{ HTML::link_to_route('home', '&larr; Back to index') }}
+		</p>
+	</div>
 @endsection

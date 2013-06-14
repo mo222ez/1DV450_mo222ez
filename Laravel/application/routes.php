@@ -44,7 +44,7 @@ Route::controller('login');
 
 Route::get('login', array('as' => 'login', 'uses' => 'admin@index'));
 
-Route::post('login', array('as' => 'login', 'uses' => 'admin@login'));
+Route::post('login', array('as' => 'login_post', 'uses' => 'admin@login'));
 
 Route::get('logout', array('as' => 'logout', 'uses' => 'admin@logout'));
 

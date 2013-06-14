@@ -8,13 +8,13 @@
 	@forelse ($posts as $post)
 		<div class="post">
 			<h2>
-				{{ HTML::link('view/' . $post->id, $post->title) }}
+				{{ HTML::link_to_route('view_post', $post->title, $post->id) }}
 			</h2>
 			<p>
 				{{ substr($post->content, 0, 120).' [...]' }}
 			</p>
 			<p>
-				{{ HTML::link('view/' . $post->id, 'Read more &rarr;') }}
+				{{ HTML::link_to_route('view_post', 'Read more &rarr;', $post->id) }}
 			</p>
 		</div>
 	@empty
